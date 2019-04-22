@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../assets/js/vue.js"></script>
+    <script src="../assets/js/vue-router.min.js"></script>
+</head>
+<body>
+    <h1>Hello World</h1>
+    <hr>
+    <div id="app">
+        <router-link to="/login">登录</router-link>
+        <router-link to="/register/itcast">注册</router-link>
+
+        <router-view></router-view>
+    </div>
+</body>
+<script>
+    var app = Vue.extend({});
+    var login = Vue.extend({
+        template:`<div>登录</div>`
+    })
+    var register = Vue.extend({
+        template:`<div>注册{{name}}</div>`,
+        data:function(){
+            return {
+                name:''
+            }
+        },
+        created:function(){
+            this.name = this.$route.params.name;
+        }
+    })
+    var router = new VueRouter({
+        routes:[
+            {path:'/',redirect:'/login'},
+            {path:'/login',component:login},
+            {path:'/register/:name',component:register}
+        ]
+    })
+    new Vue({
+        el:'#app',
+        router:router,
+        //监听路由
+        watch:{
+            $route:function(newroute,oldroute){
+                console.log(newroute,oldroute);
+                //将来就可以在这个函数中获取到当前的路由规则字符串是谁了
+                //那么就可以针对一些特定的页面做一些特定的处理
+            }
+        }
+    })
+</script>
+</html>

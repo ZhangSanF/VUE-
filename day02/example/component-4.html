@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>Component 标签</h1>
+    <hr>
+    <div id="app">
+        <component v-bind:is='who'></component>
+        <p>
+            <button @click='changeComponent'>变化</button>
+        </p>
+    </div>
+</body>
+<script>
+    var dylan1 = {
+        template:`<div>I'm dylan1</div>`
+    }
+    var dylan2 = {
+        template:`<div>I'm dylan2</div>`
+    }
+    var dylan3 = {
+        template:`<div>I'm dylan3</div>`
+    }
+    var app = new Vue({
+        el:'#app',
+        data:{
+            who:'dylan1'
+        },
+        components:{
+            'dylan1':dylan1,
+            'dylan2':dylan2,
+            'dylan3':dylan3
+        },
+        methods:{
+            changeComponent:function(){
+                if(this.who == 'dylan1'){
+                    this.who = 'dylan2'
+                }else if(this.who == 'dylan2'){
+                    this.who = 'dylan3'
+                }else{
+                    this.who = 'dylan1'
+                }
+            }
+        }
+    })
+</script>
+</html>

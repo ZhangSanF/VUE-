@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #test{
+            width: 1000px;
+            text-align: center
+        }
+    </style>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>Hello World</h1>
+    <hr>
+    <div id="app">
+        <input type="text" placeholder="编号" v-model='pid'>
+        <input type="text" placeholder="品牌" v-model='pname'>
+        <button @click='add'>ADD</button>
+        <table id="test">
+            <thead>
+                <th>编号</th>
+                <th>品牌名称</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                <tr v-if='list.length == 0'>
+                    <td colspan="4">当前列表无数据</td>
+                </tr>
+                <tr v-for="itm in list">
+                    <td>{{itm.id}}</td>
+                    <td>{{itm.name}}</td>
+                    <td>{{itm.ctime}}</td>
+                    <td>
+                        <button @click='deletes(itm.id)'>操作</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el:'#app',
+        data:{
+            list:[
+                {id:1,name:'宝马',ctime:new Date()},
+                {id:2,name:'奔驰',ctime:new Date()}
+            ],
+            pid:'',
+            pname:''
+        },
+        methods:{
+            add:function(){
+                var p = {id:this.pid,name:this.pname,ctime:new Date()};
+                this.list.push(p);
+                this.pid = '';
+                this.pname = '';
+            },
+            deletes:function(id){
+                if(!confirm('是否要删除数据！')){
+                    return;
+                }
+                var index = this.list.findIndex(function(itm){
+                    return itm.id == id;
+                })
+                this.list.splice(index,1);
+            }
+        }
+    })
+</script>
+</html>
